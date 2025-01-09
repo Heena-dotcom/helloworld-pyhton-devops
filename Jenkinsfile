@@ -7,6 +7,18 @@ pipeline {
     }
 
     stages {
+        stage('Install Python') {
+            steps {
+                script {
+                    sh '''
+                    sudo apt update
+                    sudo apt install -y python3 python3-pip
+                    python3 --version
+                    pip3 --version
+                    '''
+                }
+            }
+        }
         stage('Clone Repository') {
             steps {
                 git branch: 'main', url: 'https://github.com/Heena-dotcom/helloworld-pyhton-devops.git'
