@@ -13,23 +13,31 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/Heena-dotcom/helloworld-pyhton-devops.git'
             }
         }
-
         
-
-        stage('Build Docker Image') {
-            steps {
-                
-                    sh 'docker build -t ${DOCKER_IMAGE}:latest .'
-            
-            }
-        }
+        // stage('Run Unit Tests') {
+        //     steps {
+        //         sh 'python -m unittest discover -s tests'
+        //     }
+        // }
 
         stage('Run Unit Tests') {
             steps {
-                sh 'python -m unittest discover -s tests'
+                sh 'pip install -r requirements.txt'
+                sh 'pytest --junitxml=test-results.xml'
+            }
+            post {
+                always {
+                    junit 'test-results.xml' // Publish test results
+                }
             }
         }
-
+        
+        stage('Build Docker Image') {
+            steps {
+                    sh 'docker build -t ${DOCKER_IMAGE}:latest .'
+            }
+        }
+        
         stage('Push Docker Image') {
             steps {
                 script {
