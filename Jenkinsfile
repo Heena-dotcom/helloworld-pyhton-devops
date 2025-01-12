@@ -13,7 +13,11 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/Heena-dotcom/helloworld-pyhton-devops.git'
             }
         }
-        
+        stage('Run Unit Tests') {
+            steps {
+                sh 'python3 -m unittest discover -s tests'
+            }
+        }
         
         stage('Build Docker Image') {
             steps {
