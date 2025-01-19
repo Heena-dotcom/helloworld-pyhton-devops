@@ -16,6 +16,7 @@ Clone the repository.
 Run unit tests for the application.
 Build the Docker image automatically.
 Automatically push the Docker image to a container registry.
+Fetch the Docker image and push it to the Kubernetes manifest repository.
 
 Task 4 - Deploy on Kubernetes
 Spin up k8s cluster - GKE, EKS or or K8s 
