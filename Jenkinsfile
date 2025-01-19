@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = 'heena2325/hello-world-app'
+        DOCKER_IMAGE = 'heena2325/hello-world-py'
         DOCKER_CREDENTIALS_ID = 'dockerhub-credentials'
     }
 
@@ -30,6 +30,37 @@ pipeline {
                 }
             }
         }
+        stage('Update image in deployment'){
+            steps {
+                sh '''
+                rm -rf kubernertes-practice
+                git clone https://github.com/Heena-dotcom/kubernertes-practice.git
+                cd kubernertes-practice/K8s
+                if ! grep -q "${DOCKER_IMAGE}:latest" deployment.yaml; then
+                    sed -i "s|image:.*|image: ${DOCKER_IMAGE}:latest|g" deployment.yaml
+                    git add deployment.yaml
+                    git commit -m "Update image to ${DOCKER_IMAGE}:latest"
+                else
+                    echo "Image is already up-to-date."
+                fi
+                '''
+            }
+        }
+        stage('Push Changes') {
+            steps {
+                script {
+                    // Push the changes to the repository
+                    withCredentials([string(credentialsId: 'GitJenkinsToken', variable: 'GITHUB_TOKEN')]) {
+                        sh '''
+                        cd kubernertes-practice
+                        git remote set-url origin https://$GITHUB_TOKEN@github.com/Heena-dotcom/kubernertes-practice.git
+                        git push
+                        '''
+                    }
+                }
+            }
+        }
+        
     }
 
     post {
