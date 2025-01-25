@@ -34,7 +34,7 @@ pipeline {
             steps {
                 sh '''
                 rm -rf kubernertes-practice
-                git clone https://github.com/Heena-dotcom/kubernertes-practice.git
+                git clone https://github.com/Heena-dotcom/kubernertes.git
                 cd kubernertes-practice/K8s
                 if ! grep -q "${DOCKER_IMAGE}:latest" deployment.yaml; then
                     sed -i "s|image:.*|image: ${DOCKER_IMAGE}:latest|g" deployment.yaml
@@ -53,7 +53,7 @@ pipeline {
                     withCredentials([string(credentialsId: 'GitJenkinsToken', variable: 'GITHUB_TOKEN')]) {
                         sh '''
                         cd kubernertes-practice
-                        git remote set-url origin https://$GITHUB_TOKEN@github.com/Heena-dotcom/kubernertes-practice.git
+                        git remote set-url origin https://$GITHUB_TOKEN@github.com/Heena-dotcom/kubernertes.git
                         git push
                         '''
                     }
