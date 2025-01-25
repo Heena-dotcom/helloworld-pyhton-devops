@@ -35,7 +35,7 @@ pipeline {
                 sh '''
                 rm -rf kubernertes-practice
                 git clone https://github.com/Heena-dotcom/kubernertes.git
-                cd kubernertes-practice/K8s
+                cd kubernertes/K8s
                 if ! grep -q "${DOCKER_IMAGE}:latest" deployment.yaml; then
                     sed -i "s|image:.*|image: ${DOCKER_IMAGE}:latest|g" deployment.yaml
                     git add deployment.yaml
@@ -52,7 +52,7 @@ pipeline {
                     // Push the changes to the repository
                     withCredentials([string(credentialsId: 'GitJenkinsToken', variable: 'GITHUB_TOKEN')]) {
                         sh '''
-                        cd kubernertes-practice
+                        cd kubernertes
                         git remote set-url origin https://$GITHUB_TOKEN@github.com/Heena-dotcom/kubernertes.git
                         git push
                         '''
