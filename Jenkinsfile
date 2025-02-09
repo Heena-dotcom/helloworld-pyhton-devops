@@ -33,7 +33,7 @@ pipeline {
         stage('Update image in deployment'){
             steps {
                 sh '''
-                rm -rf kubernertes-practice
+                rm -rf kubernertes
                 git clone https://github.com/Heena-dotcom/kubernertes.git
                 cd kubernertes/helloworld-python
                 if ! grep -q "${DOCKER_IMAGE}" values.yaml; then
