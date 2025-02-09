@@ -35,11 +35,11 @@ pipeline {
                 sh '''
                 rm -rf kubernertes-practice
                 git clone https://github.com/Heena-dotcom/kubernertes.git
-                cd kubernertes/K8s
-                if ! grep -q "${DOCKER_IMAGE}:latest" deployment.yaml; then
-                    sed -i "s|image:.*|image: ${DOCKER_IMAGE}:latest|g" deployment.yaml
-                    git add deployment.yaml
-                    git commit -m "Update image to ${DOCKER_IMAGE}:latest"
+                cd kubernertes/helloworld-python
+                if ! grep -q "${DOCKER_IMAGE}" values.yaml; then
+                    sed -i "s|repository:.*|repository: ${DOCKER_IMAGE}|g" values.yaml
+                    git add values.yaml
+                    git commit -m "Update image to ${DOCKER_IMAGE}"
                 else
                     echo "Image is already up-to-date."
                 fi
