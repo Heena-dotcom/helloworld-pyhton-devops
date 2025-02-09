@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = 'heena2325/hello-world-py'
+        DOCKER_IMAGE = 'heena2325/hello-world-py-2'
         DOCKER_CREDENTIALS_ID = 'dockerhub-credentials'
     }
 
